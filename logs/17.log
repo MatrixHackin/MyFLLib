@@ -1,0 +1,687 @@
+==================================================
+device = cuda
+device_id = 0
+prev = 0
+times = 1
+global_rounds = 200
+eval_gap = 1
+batch_size = 10
+local_epochs = 1
+log_dir = /data/yuxiangyang/lhm/FL/MyFLLib/logs/tensorboard/17
+local_learning_rate = 3e-05
+learning_rate_decay = True
+learning_rate_decay_gamma = 0.99
+auto_break = False
+top_cnt = 100
+goal = test
+save_folder_name = items
+model = CLIPWithAdapter
+num_classes = 2
+algorithm = FedAvg
+dataset = Retinanpz
+data_root = /data/yuxiangyang/lhm/FL/data
+num_clients = 4
+client_drop_rate = 0.0
+random_join_ratio = False
+join_ratio = 1.0
+num_new_clients = 0
+fine_tuning_epoch_new = 0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_threthold = 10000
+dlg_eval = False
+dlg_gap = 100
+batch_num_per_client = 2
+==================================================
+
+============= Running time: 0th =============
+Creating server and clients ...
+CLIP model ViT-B/32 loaded
+preprocess: Compose(
+    Resize(size=224, interpolation=bicubic, max_size=None, antialias=warn)
+    CenterCrop(size=(224, 224))
+    <function _convert_image_to_rgb at 0x7fd54596e160>
+    ToTensor()
+    Normalize(mean=(0.48145466, 0.4578275, 0.40821073), std=(0.26862954, 0.26130258, 0.27577711))
+)
+CLIPWithAdapter(
+  (clip_model): CLIP(
+    (visual): VisionTransformer(
+      (conv1): Conv2d(3, 768, kernel_size=(32, 32), stride=(32, 32), bias=False)
+      (ln_pre): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+      (transformer): Transformer(
+        (resblocks): Sequential(
+          (0): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (1): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (2): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (3): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (4): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (5): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (6): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (7): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (8): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (9): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (10): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (11): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (ln_post): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+    )
+    (transformer): Transformer(
+      (resblocks): Sequential(
+        (0): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (1): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (2): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (3): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (4): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (5): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (6): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (7): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (8): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (9): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (10): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (11): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+      )
+    )
+    (token_embedding): Embedding(49408, 512)
+    (ln_final): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+  )
+  (image_adapter1): ImageAdapter(
+    (attention): MultiheadAttention(
+      (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+    )
+    (mlp): Sequential(
+      (0): Linear(in_features=768, out_features=192, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=192, out_features=768, bias=True)
+    )
+    (norm1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+    (norm2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  )
+  (image_adapter2): ImageAdapter(
+    (attention): MultiheadAttention(
+      (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+    )
+    (mlp): Sequential(
+      (0): Linear(in_features=768, out_features=192, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=192, out_features=768, bias=True)
+    )
+    (norm1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+    (norm2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  )
+  (text_adapter): TextAdapter(
+    (model): Sequential(
+      (0): Linear(in_features=512, out_features=128, bias=True)
+      (1): ReLU()
+      (2): Linear(in_features=128, out_features=512, bias=True)
+    )
+    (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+  )
+)
+
+Join ratio / total clients: 1.0 / 4
+Finished creating server and clients.
+
+-------------Round number: 0-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3704
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8868
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0711
+------------------------- time cost ------------------------- 177.3930642604828
+
+-------------Round number: 1-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3270
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8986
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0741
+------------------------- time cost ------------------------- 213.24436926841736
+
+-------------Round number: 2-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3258
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8990
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0743
+------------------------- time cost ------------------------- 207.31749892234802
+
+-------------Round number: 3-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3258
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8991
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0740
+------------------------- time cost ------------------------- 203.5205578804016
+
+-------------Round number: 4-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3253
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8991
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0739
+------------------------- time cost ------------------------- 250.73656129837036
+
+-------------Round number: 5-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3250
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8994
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0740
+------------------------- time cost ------------------------- 200.52908182144165
+
+-------------Round number: 6-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3245
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8993
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0738
+------------------------- time cost ------------------------- 202.1111180782318
+
+-------------Round number: 7-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3248
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8995
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0736
+------------------------- time cost ------------------------- 266.8370659351349
+
+-------------Round number: 8-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3241
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8996
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0735
+------------------------- time cost ------------------------- 213.3518762588501
+
+-------------Round number: 9-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3242
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8997
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0733
+------------------------- time cost ------------------------- 205.87449073791504
+
+-------------Round number: 10-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3243
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.8999
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0731
+------------------------- time cost ------------------------- 216.05758833885193
+
+-------------Round number: 11-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3242
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9001
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0732
+------------------------- time cost ------------------------- 198.00696849822998
+
+-------------Round number: 12-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3239
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9000
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0730
+------------------------- time cost ------------------------- 200.03907680511475
+
+-------------Round number: 13-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3241
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9000
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0729
+------------------------- time cost ------------------------- 212.167950630188
+
+-------------Round number: 14-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3236
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9002
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0727
+------------------------- time cost ------------------------- 198.9112811088562
+
+-------------Round number: 15-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3246
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9000
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0724
+------------------------- time cost ------------------------- 196.28165411949158
+
+-------------Round number: 16-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3236
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9003
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0727
+------------------------- time cost ------------------------- 203.26914191246033
+
+-------------Round number: 17-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3236
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9000
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0723
+------------------------- time cost ------------------------- 204.3595836162567
+
+-------------Round number: 18-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3242
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9006
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0726
+------------------------- time cost ------------------------- 199.45601606369019
+
+-------------Round number: 19-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3235
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9001
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0725
+------------------------- time cost ------------------------- 234.3193907737732
+
+-------------Round number: 20-------------
+
+Evaluate global model
+Client 0 test data size: 80
+Client 1 test data size: 1375
+Client 2 test data size: 115
+Client 3 test data size: 669
+Averaged Train Loss: 0.3231
+Averaged Test Accurancy: 0.8991
+Averaged Test AUC: 0.9002
+Std Test Accurancy: 0.0762
+Std Test AUC: 0.0724
+------------------------- time cost ------------------------- 207.61687970161438
+
+-------------Round number: 21-------------
+
+Evaluate global model
+Client 0 test data size: 80

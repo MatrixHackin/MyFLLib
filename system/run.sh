@@ -1,0 +1,1 @@
+python main.py --model=CLIPWithAdapter --num_classes=2 --data_root='/data/yuxiangyang/lhm/FL/data' --dataset=Retinanpz --global_rounds=150 --num_clients=4 --log_dir='/data/yuxiangyang/lhm/FL/MyFLLib/logs/tensorboard/bigretinaclip'

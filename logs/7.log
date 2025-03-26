@@ -1,0 +1,1919 @@
+==================================================
+device = cuda
+device_id = 2
+prev = 0
+times = 1
+global_rounds = 100
+eval_gap = 1
+batch_size = 10
+local_epochs = 1
+local_learning_rate = 3e-05
+learning_rate_decay = True
+learning_rate_decay_gamma = 0.99
+auto_break = False
+top_cnt = 100
+goal = test
+save_folder_name = items
+model = CLIPWithAdapter
+num_classes = 6
+algorithm = FedAvg
+dataset = DRnpz
+data_root = /data/yuxiangyang/lhm/FL/data/npz
+num_clients = 5
+client_drop_rate = 0.0
+random_join_ratio = False
+join_ratio = 1.0
+num_new_clients = 0
+fine_tuning_epoch_new = 0
+train_slow_rate = 0.0
+send_slow_rate = 0.0
+time_threthold = 10000
+dlg_eval = False
+dlg_gap = 100
+batch_num_per_client = 2
+==================================================
+
+============= Running time: 0th =============
+Creating server and clients ...
+CLIP model ViT-B/32 loaded
+preprocess: Compose(
+    Resize(size=224, interpolation=bicubic, max_size=None, antialias=warn)
+    CenterCrop(size=(224, 224))
+    <function _convert_image_to_rgb at 0x7fe7e1fcda80>
+    ToTensor()
+    Normalize(mean=(0.48145466, 0.4578275, 0.40821073), std=(0.26862954, 0.26130258, 0.27577711))
+)
+CLIPWithAdapter(
+  (clip_model): CLIP(
+    (visual): VisionTransformer(
+      (conv1): Conv2d(3, 768, kernel_size=(32, 32), stride=(32, 32), bias=False)
+      (ln_pre): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+      (transformer): Transformer(
+        (resblocks): Sequential(
+          (0): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (1): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (2): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (3): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (4): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (5): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (6): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (7): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (8): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (9): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (10): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+          (11): ResidualAttentionBlock(
+            (attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
+            )
+            (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+            (mlp): Sequential(
+              (c_fc): Linear(in_features=768, out_features=3072, bias=True)
+              (gelu): QuickGELU()
+              (c_proj): Linear(in_features=3072, out_features=768, bias=True)
+            )
+            (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (ln_post): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+    )
+    (transformer): Transformer(
+      (resblocks): Sequential(
+        (0): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (1): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (2): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (3): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (4): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (5): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (6): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (7): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (8): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (9): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (10): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+        (11): ResidualAttentionBlock(
+          (attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=512, out_features=512, bias=True)
+          )
+          (ln_1): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+          (mlp): Sequential(
+            (c_fc): Linear(in_features=512, out_features=2048, bias=True)
+            (gelu): QuickGELU()
+            (c_proj): Linear(in_features=2048, out_features=512, bias=True)
+          )
+          (ln_2): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+        )
+      )
+    )
+    (token_embedding): Embedding(49408, 512)
+    (ln_final): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+  )
+  (image_adapter1): ImageAdapter(
+    (model): Sequential(
+      (0): Linear(in_features=768, out_features=192, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=192, out_features=768, bias=True)
+    )
+    (norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  )
+  (image_adapter2): ImageAdapter(
+    (model): Sequential(
+      (0): Linear(in_features=768, out_features=192, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=192, out_features=768, bias=True)
+    )
+    (norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  )
+  (text_adapter): TextAdapter(
+    (model): Sequential(
+      (0): Linear(in_features=512, out_features=32, bias=True)
+      (1): ReLU()
+      (2): Linear(in_features=32, out_features=512, bias=True)
+    )
+    (norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+  )
+)
+
+Join ratio / total clients: 1.0 / 5
+Finished creating server and clients.
+
+-------------Round number: 0-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 1.8374
+Averaged Test Accurancy: 0.0068
+Averaged Test AUC: 0.5019
+Std Test Accurancy: 0.0226
+Std Test AUC: 0.0619
+------------------------- time cost ------------------------- 491.013902425766
+
+-------------Round number: 1-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.9069
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9082
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0556
+------------------------- time cost ------------------------- 494.44003438949585
+
+-------------Round number: 2-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8862
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9102
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0566
+------------------------- time cost ------------------------- 506.9013481140137
+
+-------------Round number: 3-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8802
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9107
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0568
+------------------------- time cost ------------------------- 490.78217339515686
+
+-------------Round number: 4-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8778
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9110
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0569
+------------------------- time cost ------------------------- 502.66984963417053
+
+-------------Round number: 5-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8764
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9112
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0569
+------------------------- time cost ------------------------- 494.5150525569916
+
+-------------Round number: 6-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8777
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9114
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0569
+------------------------- time cost ------------------------- 503.4111647605896
+
+-------------Round number: 7-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8756
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9117
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0571
+------------------------- time cost ------------------------- 500.0061490535736
+
+-------------Round number: 8-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8751
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9120
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0572
+------------------------- time cost ------------------------- 503.19935059547424
+
+-------------Round number: 9-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8770
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9121
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0572
+------------------------- time cost ------------------------- 473.77106165885925
+
+-------------Round number: 10-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8751
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9123
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0574
+------------------------- time cost ------------------------- 410.081946849823
+
+-------------Round number: 11-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8732
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9126
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0574
+------------------------- time cost ------------------------- 416.63308024406433
+
+-------------Round number: 12-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8726
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9128
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 412.6698317527771
+
+-------------Round number: 13-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8719
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9129
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0576
+------------------------- time cost ------------------------- 413.8832497596741
+
+-------------Round number: 14-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8723
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9130
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0577
+------------------------- time cost ------------------------- 411.16594791412354
+
+-------------Round number: 15-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8730
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9130
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0578
+------------------------- time cost ------------------------- 411.82733392715454
+
+-------------Round number: 16-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8743
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9131
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0578
+------------------------- time cost ------------------------- 407.84384322166443
+
+-------------Round number: 17-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8710
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9130
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0577
+------------------------- time cost ------------------------- 414.12709045410156
+
+-------------Round number: 18-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8715
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9130
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0579
+------------------------- time cost ------------------------- 428.41111063957214
+
+-------------Round number: 19-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8707
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9131
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0580
+------------------------- time cost ------------------------- 427.5169289112091
+
+-------------Round number: 20-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8706
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9130
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0580
+------------------------- time cost ------------------------- 420.00506830215454
+
+-------------Round number: 21-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8781
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9130
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0582
+------------------------- time cost ------------------------- 416.96039748191833
+
+-------------Round number: 22-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8703
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9130
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0583
+------------------------- time cost ------------------------- 417.2367374897003
+
+-------------Round number: 23-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8711
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9129
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0582
+------------------------- time cost ------------------------- 424.14633798599243
+
+-------------Round number: 24-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8704
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9126
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0581
+------------------------- time cost ------------------------- 417.4415876865387
+
+-------------Round number: 25-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8702
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9123
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0580
+------------------------- time cost ------------------------- 427.6289801597595
+
+-------------Round number: 26-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8697
+Averaged Test Accurancy: 0.6860
+Averaged Test AUC: 0.9119
+Std Test Accurancy: 0.1225
+Std Test AUC: 0.0578
+------------------------- time cost ------------------------- 418.3659179210663
+
+-------------Round number: 27-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8711
+Averaged Test Accurancy: 0.6868
+Averaged Test AUC: 0.9114
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0576
+------------------------- time cost ------------------------- 409.5652554035187
+
+-------------Round number: 28-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8690
+Averaged Test Accurancy: 0.6863
+Averaged Test AUC: 0.9114
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 417.44657349586487
+
+-------------Round number: 29-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8686
+Averaged Test Accurancy: 0.6864
+Averaged Test AUC: 0.9112
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0573
+------------------------- time cost ------------------------- 422.2846214771271
+
+-------------Round number: 30-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8707
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9114
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0574
+------------------------- time cost ------------------------- 413.9965879917145
+
+-------------Round number: 31-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8688
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9111
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0573
+------------------------- time cost ------------------------- 443.21369194984436
+
+-------------Round number: 32-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8684
+Averaged Test Accurancy: 0.6864
+Averaged Test AUC: 0.9106
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0571
+------------------------- time cost ------------------------- 425.1015238761902
+
+-------------Round number: 33-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8688
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9106
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0572
+------------------------- time cost ------------------------- 423.638703584671
+
+-------------Round number: 34-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8690
+Averaged Test Accurancy: 0.6870
+Averaged Test AUC: 0.9099
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0569
+------------------------- time cost ------------------------- 420.7801764011383
+
+-------------Round number: 35-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8684
+Averaged Test Accurancy: 0.6863
+Averaged Test AUC: 0.9102
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0571
+------------------------- time cost ------------------------- 411.8719298839569
+
+-------------Round number: 36-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8693
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9103
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0571
+------------------------- time cost ------------------------- 423.4592823982239
+
+-------------Round number: 37-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8770
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9105
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0574
+------------------------- time cost ------------------------- 407.83014941215515
+
+-------------Round number: 38-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8687
+Averaged Test Accurancy: 0.6868
+Averaged Test AUC: 0.9097
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0570
+------------------------- time cost ------------------------- 418.47808504104614
+
+-------------Round number: 39-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8688
+Averaged Test Accurancy: 0.6866
+Averaged Test AUC: 0.9103
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0572
+------------------------- time cost ------------------------- 413.07997155189514
+
+-------------Round number: 40-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8686
+Averaged Test Accurancy: 0.6870
+Averaged Test AUC: 0.9102
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0572
+------------------------- time cost ------------------------- 417.8301239013672
+
+-------------Round number: 41-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8690
+Averaged Test Accurancy: 0.6866
+Averaged Test AUC: 0.9108
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 441.66606187820435
+
+-------------Round number: 42-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8702
+Averaged Test Accurancy: 0.6865
+Averaged Test AUC: 0.9111
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 424.6276443004608
+
+-------------Round number: 43-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8687
+Averaged Test Accurancy: 0.6869
+Averaged Test AUC: 0.9107
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 423.3618505001068
+
+-------------Round number: 44-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8692
+Averaged Test Accurancy: 0.6864
+Averaged Test AUC: 0.9110
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 420.54113125801086
+
+-------------Round number: 45-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8687
+Averaged Test Accurancy: 0.6864
+Averaged Test AUC: 0.9110
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0574
+------------------------- time cost ------------------------- 424.11285305023193
+
+-------------Round number: 46-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8707
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9112
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 410.8560130596161
+
+-------------Round number: 47-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8690
+Averaged Test Accurancy: 0.6863
+Averaged Test AUC: 0.9108
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0574
+------------------------- time cost ------------------------- 421.89525389671326
+
+-------------Round number: 48-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8699
+Averaged Test Accurancy: 0.6864
+Averaged Test AUC: 0.9111
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0576
+------------------------- time cost ------------------------- 410.6208906173706
+
+-------------Round number: 49-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8705
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9113
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0577
+------------------------- time cost ------------------------- 412.69011759757996
+
+-------------Round number: 50-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8696
+Averaged Test Accurancy: 0.6866
+Averaged Test AUC: 0.9108
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0575
+------------------------- time cost ------------------------- 421.294593334198
+
+-------------Round number: 51-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8700
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9113
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0577
+------------------------- time cost ------------------------- 420.83881521224976
+
+-------------Round number: 52-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8701
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9113
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0577
+------------------------- time cost ------------------------- 413.624764919281
+
+-------------Round number: 53-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8700
+Averaged Test Accurancy: 0.6864
+Averaged Test AUC: 0.9114
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0578
+------------------------- time cost ------------------------- 416.3172664642334
+
+-------------Round number: 54-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8698
+Averaged Test Accurancy: 0.6865
+Averaged Test AUC: 0.9113
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0577
+------------------------- time cost ------------------------- 417.90248799324036
+
+-------------Round number: 55-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8699
+Averaged Test Accurancy: 0.6865
+Averaged Test AUC: 0.9115
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0580
+------------------------- time cost ------------------------- 413.4593241214752
+
+-------------Round number: 56-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8703
+Averaged Test Accurancy: 0.6865
+Averaged Test AUC: 0.9115
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0580
+------------------------- time cost ------------------------- 418.31739258766174
+
+-------------Round number: 57-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8704
+Averaged Test Accurancy: 0.6868
+Averaged Test AUC: 0.9116
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0581
+------------------------- time cost ------------------------- 412.9493103027344
+
+-------------Round number: 58-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8708
+Averaged Test Accurancy: 0.6862
+Averaged Test AUC: 0.9119
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0581
+------------------------- time cost ------------------------- 419.6505777835846
+
+-------------Round number: 59-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8699
+Averaged Test Accurancy: 0.6864
+Averaged Test AUC: 0.9119
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0582
+------------------------- time cost ------------------------- 410.72719717025757
+
+-------------Round number: 60-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8708
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9122
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0585
+------------------------- time cost ------------------------- 414.9034342765808
+
+-------------Round number: 61-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8702
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9123
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0585
+------------------------- time cost ------------------------- 412.5950872898102
+
+-------------Round number: 62-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8702
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0586
+------------------------- time cost ------------------------- 411.4359383583069
+
+-------------Round number: 63-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8703
+Averaged Test Accurancy: 0.6864
+Averaged Test AUC: 0.9126
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0587
+------------------------- time cost ------------------------- 415.0114839076996
+
+-------------Round number: 64-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8703
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9127
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0587
+------------------------- time cost ------------------------- 417.22187328338623
+
+-------------Round number: 65-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8702
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9128
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0586
+------------------------- time cost ------------------------- 417.7231867313385
+
+-------------Round number: 66-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8703
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9129
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0585
+------------------------- time cost ------------------------- 412.49509477615356
+
+-------------Round number: 67-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8717
+Averaged Test Accurancy: 0.6867
+Averaged Test AUC: 0.9127
+Std Test Accurancy: 0.1227
+Std Test AUC: 0.0583
+------------------------- time cost ------------------------- 415.3311140537262
+
+-------------Round number: 68-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8725
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9128
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0582
+------------------------- time cost ------------------------- 417.93200612068176
+
+-------------Round number: 69-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8709
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9127
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0580
+------------------------- time cost ------------------------- 416.51455521583557
+
+-------------Round number: 70-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8713
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9127
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0579
+------------------------- time cost ------------------------- 423.7080602645874
+
+-------------Round number: 71-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8719
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9125
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0579
+------------------------- time cost ------------------------- 409.72218680381775
+
+-------------Round number: 72-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8720
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9126
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0578
+------------------------- time cost ------------------------- 415.4249064922333
+
+-------------Round number: 73-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8732
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9126
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0577
+------------------------- time cost ------------------------- 421.66951417922974
+
+-------------Round number: 74-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8722
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9125
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0577
+------------------------- time cost ------------------------- 409.5187385082245
+
+-------------Round number: 75-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8728
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0576
+------------------------- time cost ------------------------- 416.2351791858673
+
+-------------Round number: 76-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8736
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9123
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0573
+------------------------- time cost ------------------------- 423.9715414047241
+
+-------------Round number: 77-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8737
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9122
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0572
+------------------------- time cost ------------------------- 417.9304268360138
+
+-------------Round number: 78-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8743
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9121
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0570
+------------------------- time cost ------------------------- 423.3514485359192
+
+-------------Round number: 79-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8746
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9120
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0567
+------------------------- time cost ------------------------- 428.85753631591797
+
+-------------Round number: 80-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8755
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9121
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0566
+------------------------- time cost ------------------------- 416.2828469276428
+
+-------------Round number: 81-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8745
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9119
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0565
+------------------------- time cost ------------------------- 442.9266080856323
+
+-------------Round number: 82-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8744
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9120
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0563
+------------------------- time cost ------------------------- 414.9259948730469
+
+-------------Round number: 83-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8750
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9120
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0563
+------------------------- time cost ------------------------- 415.3840129375458
+
+-------------Round number: 84-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8751
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9121
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0561
+------------------------- time cost ------------------------- 426.43931221961975
+
+-------------Round number: 85-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8756
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9120
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0561
+------------------------- time cost ------------------------- 431.8151345252991
+
+-------------Round number: 86-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8762
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9121
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0562
+------------------------- time cost ------------------------- 419.50625133514404
+
+-------------Round number: 87-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8755
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9121
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0563
+------------------------- time cost ------------------------- 405.368186712265
+
+-------------Round number: 88-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8757
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9121
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0561
+------------------------- time cost ------------------------- 421.26805305480957
+
+-------------Round number: 89-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8760
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9122
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0562
+------------------------- time cost ------------------------- 414.7779333591461
+
+-------------Round number: 90-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8753
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9123
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0561
+------------------------- time cost ------------------------- 415.7794888019562
+
+-------------Round number: 91-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8754
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9123
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0563
+------------------------- time cost ------------------------- 424.5394399166107
+
+-------------Round number: 92-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8747
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0563
+------------------------- time cost ------------------------- 414.487300157547
+
+-------------Round number: 93-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8758
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0564
+------------------------- time cost ------------------------- 413.5649082660675
+
+-------------Round number: 94-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8761
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0564
+------------------------- time cost ------------------------- 414.51368951797485
+
+-------------Round number: 95-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8774
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0564
+------------------------- time cost ------------------------- 426.1394011974335
+
+-------------Round number: 96-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8775
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0563
+------------------------- time cost ------------------------- 432.5535547733307
+
+-------------Round number: 97-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8768
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9125
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0563
+------------------------- time cost ------------------------- 418.76723432540894
+
+-------------Round number: 98-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8765
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0564
+------------------------- time cost ------------------------- 448.21157240867615
+
+-------------Round number: 99-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8768
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0562
+------------------------- time cost ------------------------- 445.6267890930176
+
+-------------Round number: 100-------------
+
+Evaluate global model
+Client 0 test data size: 673
+Client 1 test data size: 1945
+Client 2 test data size: 6884
+Client 3 test data size: 88
+Client 4 test data size: 240
+Averaged Train Loss: 0.8766
+Averaged Test Accurancy: 0.6861
+Averaged Test AUC: 0.9124
+Std Test Accurancy: 0.1226
+Std Test AUC: 0.0563
+------------------------- time cost ------------------------- 444.29641580581665
+
+Best accuracy.
+0.6869786368260428
+
+Average time cost per round.
+426.3839923810959
+File path: ../results/DRnpz_FedAvg_test_0.h5
+
+Average time cost: 43170.85s.
+Length:  101
+std for best accurancy: 0.0
+mean for best accurancy: 0.6869786368260428
+All done!
+
+Storage on cuda:0
+-------------------------------------------------------------------------------
+Total Tensors: 1070066897 	Used Memory: 2.32G
+The allocated memory on cuda:0: 2.39G
+Memory differs due to the matrix alignment or invisible gradient buffer tensors
+-------------------------------------------------------------------------------
+
+Storage on cpu
+-------------------------------------------------------------------------------
+Total Tensors: 5929 	Used Memory: 23.50K
+-------------------------------------------------------------------------------

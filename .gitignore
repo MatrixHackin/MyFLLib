@@ -11,4 +11,4 @@ logs/tensorboard/
 
 # 编程语言相关
 **/__pycache__/       # Python 字节码缓存[6,9](@ref)
-*.pyc              # Python 编译文件[9](@ref)
+**/*.pyc              # Python 编译文件[9](@ref)
