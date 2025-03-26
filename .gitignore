@@ -1,0 +1,14 @@
+# 忽略 system/model 文件夹及其所有内容
+system/models/
+result_models/
+results/
+logs/res_fig/
+logs/tensorboard/
+# IDE 配置文件
+.idea/             # IntelliJ IDEA 配置[8,9](@ref)
+.vscode/           # VSCode 配置[9](@ref)
+*.iml              # IntelliJ 模块文件[8](@ref)
+
+# 编程语言相关
+**/__pycache__/       # Python 字节码缓存[6,9](@ref)
+*.pyc              # Python 编译文件[9](@ref)
